@@ -7,10 +7,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.index.Index;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 import com.covidservice.models.TravelHistory;
 
 @Configuration
+@EnableAsync
 public class MongoConfig {
 
 	@Autowired

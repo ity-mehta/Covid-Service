@@ -42,7 +42,7 @@ public class TravelHistoryController {
 	public  ResponseEntity<String> syncTravelHistory() throws TravelHistoryException {
 		LOG.info("Saving travel history details.");
 		travelHistoryService.syncTravelHistory();
-		return new ResponseEntity<String>("Travel history data successfuly synched", HttpStatus.OK);
+		return new ResponseEntity<String>("Travel history data sync is in progress.", HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/address", method = RequestMethod.GET)
