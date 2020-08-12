@@ -2,23 +2,13 @@ package com.covidservice.models;
 
 import java.util.Date;
 
-import javax.validation.constraints.NotNull;
-
-import org.springframework.data.mongodb.core.index.CompoundIndex;
-import org.springframework.data.mongodb.core.index.CompoundIndexes;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Document(collection="travelHistory")
-@CompoundIndexes({
-    @CompoundIndex(name = "timefrom_timeto", def = "{'timefrom' : 1, 'timeto': 1}")
-})
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class TravelHistory {
-	
-	@Indexed(unique = true)
 	private String _cn6ca;
 	
 	private String accuracylocation;

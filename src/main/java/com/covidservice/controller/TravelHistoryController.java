@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.covidservice.exceptionHandling.TravelHistoryException;
+import com.covidservice.exception.TravelHistoryException;
 import com.covidservice.models.TravelHistory;
 import com.covidservice.service.TravelHistoryService;
 

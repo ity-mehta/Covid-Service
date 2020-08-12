@@ -24,8 +24,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import com.covidservice.exceptionHandling.InvalidDateException;
-import com.covidservice.exceptionHandling.TravelHistoryException;
+import com.covidservice.exception.InvalidDateException;
+import com.covidservice.exception.TravelHistoryException;
 import com.covidservice.models.TravelHistory;
 import com.covidservice.repository.TravelHistoryRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;

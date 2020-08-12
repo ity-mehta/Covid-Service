@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.covidservice.exceptionHandling.InvalidDateException;
-import com.covidservice.exceptionHandling.TravelHistoryException;
+import com.covidservice.exception.InvalidDateException;
+import com.covidservice.exception.TravelHistoryException;
 
 @RestControllerAdvice
 public class ExceptionHandlingController extends ResponseEntityExceptionHandler{

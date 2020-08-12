@@ -3,7 +3,7 @@ package com.covidservice.service;
 import java.util.Date;
 import java.util.List;
 
-import com.covidservice.exceptionHandling.TravelHistoryException;
+import com.covidservice.exception.TravelHistoryException;
 import com.covidservice.models.TravelHistory;
 
 public interface TravelHistoryService {
