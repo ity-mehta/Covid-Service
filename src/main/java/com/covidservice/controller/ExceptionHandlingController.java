@@ -1,5 +1,7 @@
 package com.covidservice.controller;
 
+import javax.validation.ConstraintViolationException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -26,4 +28,10 @@ public class ExceptionHandlingController extends ResponseEntityExceptionHandler{
 		LOG.error("Invalid date Exception {}",ex.getMessage());
 		return new ResponseEntity<String>(ex.getMessage(),HttpStatus.BAD_REQUEST );
 	}
+	
+	@ExceptionHandler(ConstraintViolationException.class)
+	public ResponseEntity<String> handleConstraintViolationExceptions(ConstraintViolationException ex) {
+		LOG.error("Invalid input paramter exception {}",ex.getMessage());
+	    return new ResponseEntity<String>(String.format("Invalid input parameters", ex.getMessage()), HttpStatus.BAD_REQUEST);
+	  }
 }

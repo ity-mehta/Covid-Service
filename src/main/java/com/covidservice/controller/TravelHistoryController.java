@@ -3,12 +3,15 @@ package com.covidservice.controller;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +21,7 @@ import com.covidservice.exceptionHandling.TravelHistoryException;
 import com.covidservice.models.TravelHistory;
 import com.covidservice.service.TravelHistoryService;
 
+@Validated
 @RestController
 @RequestMapping(value = "/travelhistory")
 public class TravelHistoryController {
@@ -28,9 +32,9 @@ public class TravelHistoryController {
 	private TravelHistoryService travelHistoryService;
 
 	@RequestMapping(value = "/people", method = RequestMethod.GET)
-	public List<TravelHistory> getAllTravelHistory(@RequestParam(name = "timefrom") @DateTimeFormat(pattern = "dd/MM/yy") Date timefrom,
-			@RequestParam(name = "timeto") @DateTimeFormat(pattern = "dd/MM/yy") Date timeto) throws TravelHistoryException {
-		LOG.info("Getting all people.");
+	public List<TravelHistory> getAllTravelHistory(@RequestParam(name = "timefrom",required = false) @Valid @DateTimeFormat(pattern = "dd/MM/yy") Date timefrom,
+			@RequestParam(name = "timeto",required = false) @Valid @DateTimeFormat(pattern = "dd/MM/yy") Date timeto) throws TravelHistoryException {
+		LOG.info("Getting all people. on date basis");
 		return travelHistoryService.getAllTravelHistory(timefrom,timeto);
 	}
 

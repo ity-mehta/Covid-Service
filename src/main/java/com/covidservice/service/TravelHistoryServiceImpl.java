@@ -6,9 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,9 +32,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
 @Service
 public class TravelHistoryServiceImpl implements TravelHistoryService{
+	
+	public static final String DATE_FORMATTER = "dd/MM/yyyy hh:mm:ss";
+	public static final String TRAVEL_HISTORY_JSON_URL = "https://api.covid19india.org/travel_history.json";
 	
 	@Autowired
 	RestTemplate restTemplate;
@@ -97,7 +96,7 @@ public class TravelHistoryServiceImpl implements TravelHistoryService{
 			HttpHeaders headers=new HttpHeaders();
 			headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 			HttpEntity<String> entity=new HttpEntity<String>(headers);
-			travelHistoryData =  restTemplate.exchange("https://api.covid19india.org/travel_history.json",HttpMethod.GET,entity,String.class).getBody();
+			travelHistoryData =  restTemplate.exchange(TRAVEL_HISTORY_JSON_URL,HttpMethod.GET,entity,String.class).getBody();
 		} catch (RestClientException e) {
 			LOG.error(e.getMessage());
 			throw new TravelHistoryException("Unable to get travel history json");
@@ -114,7 +113,7 @@ public class TravelHistoryServiceImpl implements TravelHistoryService{
 			ObjectMapper objectMapper = new ObjectMapper();
 			objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-			DateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+			DateFormat df = new SimpleDateFormat(DATE_FORMATTER);
 			objectMapper.setDateFormat(df);
 			travelHistoryList = new ArrayList<TravelHistory>();
 			int size = travelHistoryJson.length();
@@ -127,15 +126,13 @@ public class TravelHistoryServiceImpl implements TravelHistoryService{
 					travelHistoryList.add(travelHistory);
 				} catch (JsonProcessingException e) {
 					LOG.error("Invalid json format for data {}",travelHistoryJsonObj);
-				}
-				 
+				} 
 			}
 		} catch (JSONException e) {
 			LOG.error(e.getMessage());
 			throw new TravelHistoryException("Unable to process travel history json data");
 		}
 		return travelHistoryList;
-		
 	}
 
 	@Override
@@ -145,8 +142,6 @@ public class TravelHistoryServiceImpl implements TravelHistoryService{
 			Query query = new Query();
 			query.fields().include("address");
 			travelHistoryList =  mongoTemplate.find(query,TravelHistory.class);
-			travelHistoryList = travelHistoryList.stream().filter(x->x!=null).collect(Collectors.toList());
-			System.out.println(travelHistoryList.toString());
 		} catch (Exception e) {
 			throw new TravelHistoryException("Unable to get all address.");
 		}

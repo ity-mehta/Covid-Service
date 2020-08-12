@@ -2,16 +2,23 @@ package com.covidservice.models;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Document(collection="travelHistory")
+@CompoundIndexes({
+    @CompoundIndex(name = "timefrom_timeto", def = "{'timefrom' : 1, 'timeto': 1}")
+})
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class TravelHistory {
 	
+	@Indexed(unique = true)
 	private String _cn6ca;
 	
 	private String accuracylocation;
@@ -21,9 +28,7 @@ public class TravelHistory {
 	private String modeoftravel;
 	private String pid;
 	private String placename;
-	//@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	private Date timefrom;
-	//@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	private Date timeto;
 	private String type;
 	
